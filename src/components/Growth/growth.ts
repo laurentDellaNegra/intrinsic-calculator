@@ -1,120 +1,62 @@
 import { average, averageCoumpoundGrowthRate } from '../../utils/number'
-import { Company } from '../../utils/roicAi/company'
-import { Financial } from '../../utils/roicAi/financial'
+import { Company, CompanyTable } from '../../utils/roicAi/company'
+import { Financial, FinancialTable } from '../../utils/roicAi/financial'
 
-// Equity Growth
-// EPS Growth
-// Cash From AO Growth
-// Revenue Growth
-// Average Moat Growth
+function getGrowth(reversedFinancial: FinancialTable, key: string) {
+  const growth1 = averageCoumpoundGrowthRate(
+    reversedFinancial[10][key],
+    reversedFinancial[0][key],
+    10
+  )
+  const growth2 = averageCoumpoundGrowthRate(
+    reversedFinancial[5][key],
+    reversedFinancial[0][key],
+    5
+  )
+  const growth3 = averageCoumpoundGrowthRate(
+    reversedFinancial[3][key],
+    reversedFinancial[0][key],
+    3
+  )
+  const growth4 = averageCoumpoundGrowthRate(
+    reversedFinancial[1][key],
+    reversedFinancial[0][key],
+    1
+  )
+  return [
+    { value: growth1, displayedValue: (growth1 * 100).toFixed(2) + '%' },
+    { value: growth2, displayedValue: (growth2 * 100).toFixed(2) + '%' },
+    { value: growth3, displayedValue: (growth3 * 100).toFixed(2) + '%' },
+    { value: growth4, displayedValue: (growth4 * 100).toFixed(2) + '%' },
+  ]
+}
 
-export function createTable(company: Company, financial: Financial) {
-  const cols = ['10 Years Avg.', '5 Years Avg.', '3 Years Avg.', '1 Years Avg.']
-  const reversedFinancial = financial.table.reverse()
-  const equityGrowth1 = averageCoumpoundGrowthRate(
-    reversedFinancial[10].equity,
-    reversedFinancial[0].equity,
-    10
-  )
-  const equityGrowth2 = averageCoumpoundGrowthRate(
-    reversedFinancial[5].equity,
-    reversedFinancial[0].equity,
-    5
-  )
-  const equityGrowth3 = averageCoumpoundGrowthRate(
-    reversedFinancial[3].equity,
-    reversedFinancial[0].equity,
-    3
-  )
-  const equityGrowth4 = averageCoumpoundGrowthRate(
-    reversedFinancial[1].equity,
-    reversedFinancial[0].equity,
-    1
-  )
-  const equitiesGrowth = [
-    { value: equityGrowth1, displayedValue: (equityGrowth1 * 100).toFixed(2) + '%' },
-    { value: equityGrowth2, displayedValue: (equityGrowth2 * 100).toFixed(2) + '%' },
-    { value: equityGrowth3, displayedValue: (equityGrowth3 * 100).toFixed(2) + '%' },
-    { value: equityGrowth4, displayedValue: (equityGrowth4 * 100).toFixed(2) + '%' },
+function getGrowthAverage(reversedFinancial: CompanyTable, key: string) {
+  console.log(reversedFinancial.slice(0, 5).map((r) => r[key]))
+  const growth1 = average(reversedFinancial.slice(0, 10).map((r) => r[key]))
+  const growth2 = average(reversedFinancial.slice(0, 5).map((r) => r[key]))
+  const growth3 = average(reversedFinancial.slice(0, 4).map((r) => r[key]))
+  const growth4 = average(reversedFinancial.slice(0, 1).map((r) => r[key]))
+
+  return [
+    { value: growth1, displayedValue: growth1.toFixed(2) + '%' },
+    { value: growth2, displayedValue: growth2.toFixed(2) + '%' },
+    { value: growth3, displayedValue: growth3.toFixed(2) + '%' },
+    { value: growth4, displayedValue: growth4.toFixed(2) + '%' },
   ]
-  const epsGrowth1 = averageCoumpoundGrowthRate(
-    reversedFinancial[10].eps,
-    reversedFinancial[0].eps,
-    10
-  )
-  const epsGrowth2 = averageCoumpoundGrowthRate(
-    reversedFinancial[5].eps,
-    reversedFinancial[0].eps,
-    5
-  )
-  const epsGrowth3 = averageCoumpoundGrowthRate(
-    reversedFinancial[3].eps,
-    reversedFinancial[0].eps,
-    3
-  )
-  const epsGrowth4 = averageCoumpoundGrowthRate(
-    reversedFinancial[1].eps,
-    reversedFinancial[0].eps,
-    1
-  )
-  const epsGrowth = [
-    { value: epsGrowth1, displayedValue: (epsGrowth1 * 100).toFixed(2) + '%' },
-    { value: epsGrowth2, displayedValue: (epsGrowth2 * 100).toFixed(2) + '%' },
-    { value: epsGrowth3, displayedValue: (epsGrowth3 * 100).toFixed(2) + '%' },
-    { value: epsGrowth4, displayedValue: (epsGrowth4 * 100).toFixed(2) + '%' },
-  ]
-  const cashFromOAGrowth1 = averageCoumpoundGrowthRate(
-    reversedFinancial[10].cashFromOA,
-    reversedFinancial[0].cashFromOA,
-    10
-  )
-  const cashFromOAGrowth2 = averageCoumpoundGrowthRate(
-    reversedFinancial[5].cashFromOA,
-    reversedFinancial[0].cashFromOA,
-    5
-  )
-  const cashFromOAGrowth3 = averageCoumpoundGrowthRate(
-    reversedFinancial[3].cashFromOA,
-    reversedFinancial[0].cashFromOA,
-    3
-  )
-  const cashFromOAGrowth4 = averageCoumpoundGrowthRate(
-    reversedFinancial[1].cashFromOA,
-    reversedFinancial[0].cashFromOA,
-    1
-  )
-  const cashFromOAGrowth = [
-    { value: cashFromOAGrowth1, displayedValue: (cashFromOAGrowth1 * 100).toFixed(2) + '%' },
-    { value: cashFromOAGrowth2, displayedValue: (cashFromOAGrowth2 * 100).toFixed(2) + '%' },
-    { value: cashFromOAGrowth3, displayedValue: (cashFromOAGrowth3 * 100).toFixed(2) + '%' },
-    { value: cashFromOAGrowth4, displayedValue: (cashFromOAGrowth4 * 100).toFixed(2) + '%' },
-  ]
-  const revenueGrowth1 = averageCoumpoundGrowthRate(
-    reversedFinancial[10].revenue,
-    reversedFinancial[0].revenue,
-    10
-  )
-  const revenueGrowth2 = averageCoumpoundGrowthRate(
-    reversedFinancial[5].revenue,
-    reversedFinancial[0].revenue,
-    5
-  )
-  const revenueGrowth3 = averageCoumpoundGrowthRate(
-    reversedFinancial[3].revenue,
-    reversedFinancial[0].revenue,
-    3
-  )
-  const revenueGrowth4 = averageCoumpoundGrowthRate(
-    reversedFinancial[1].revenue,
-    reversedFinancial[0].revenue,
-    1
-  )
-  const revenueGrowth = [
-    { value: revenueGrowth1, displayedValue: (revenueGrowth1 * 100).toFixed(2) + '%' },
-    { value: revenueGrowth2, displayedValue: (revenueGrowth2 * 100).toFixed(2) + '%' },
-    { value: revenueGrowth3, displayedValue: (revenueGrowth3 * 100).toFixed(2) + '%' },
-    { value: revenueGrowth4, displayedValue: (revenueGrowth4 * 100).toFixed(2) + '%' },
-  ]
+}
+
+type GrowthTable = Array<{
+  value: number
+  displayedValue: string
+}>
+
+export function computeAverage(
+  equitiesGrowth: GrowthTable,
+  epsGrowth: GrowthTable,
+  cashFromOAGrowth: GrowthTable,
+  revenueGrowth: GrowthTable
+) {
   const average1 = average([
     equitiesGrowth[0].value,
     epsGrowth[0].value,
@@ -139,13 +81,43 @@ export function createTable(company: Company, financial: Financial) {
     cashFromOAGrowth[3].value,
     revenueGrowth[3].value,
   ])
-  const averageMoatGrowth = [
+  return [
     { value: average1, displayedValue: (average1 * 100).toFixed(2) + '%' },
     { value: average2, displayedValue: (average2 * 100).toFixed(2) + '%' },
     { value: average3, displayedValue: (average3 * 100).toFixed(2) + '%' },
     { value: average4, displayedValue: (average4 * 100).toFixed(2) + '%' },
   ]
-  console.log(equitiesGrowth)
+}
+
+export function computeAverage2(roeGrowth: GrowthTable, roicGrowth: GrowthTable) {
+  const average1 = average([roeGrowth[0].value, roicGrowth[0].value])
+  const average2 = average([roeGrowth[1].value, roicGrowth[1].value])
+  const average3 = average([roeGrowth[2].value, roicGrowth[2].value])
+  const average4 = average([roeGrowth[3].value, roicGrowth[3].value])
+  return [
+    { value: average1, displayedValue: average1.toFixed(2) + '%' },
+    { value: average2, displayedValue: average2.toFixed(2) + '%' },
+    { value: average3, displayedValue: average3.toFixed(2) + '%' },
+    { value: average4, displayedValue: average4.toFixed(2) + '%' },
+  ]
+}
+
+export function createFinancialTable(financial: Financial) {
+  const cols = ['10 Years Avg.', '5 Years Avg.', '3 Years Avg.', '1 Years Avg.']
+  const reversedFinancialTable = financial.table.reverse()
+
+  const equitiesGrowth = getGrowth(reversedFinancialTable, 'equity')
+  const epsGrowth = getGrowth(reversedFinancialTable, 'eps')
+  const cashFromOAGrowth = getGrowth(reversedFinancialTable, 'cashFromOA')
+  const revenueGrowth = getGrowth(reversedFinancialTable, 'revenue')
+
+  const averageMoatGrowth = computeAverage(
+    equitiesGrowth,
+    epsGrowth,
+    cashFromOAGrowth,
+    revenueGrowth
+  )
+
   return {
     cols,
     rowsArray: [
@@ -160,6 +132,30 @@ export function createTable(company: Company, financial: Financial) {
       eps: epsGrowth,
       cashFromOA: cashFromOAGrowth,
       revenue: revenueGrowth,
+      averageMoat: averageMoatGrowth,
+    },
+  }
+}
+
+export function createCompanyTable(company: Company) {
+  const cols = ['10 Years Avg.', '5 Years Avg.', '3 Years Avg.', '1 Years Avg.']
+  const reversedCompanyTable = company.table.reverse()
+
+  const roeGrowth = getGrowthAverage(reversedCompanyTable, 'roe')
+  const roicGrowth = getGrowthAverage(reversedCompanyTable, 'roic')
+
+  const averageMoatGrowth = computeAverage2(roeGrowth, roicGrowth)
+
+  return {
+    cols,
+    rowsArray: [
+      { id: 'roe', label: 'ROE Growth' },
+      { id: 'roic', label: 'ROIC Growth' },
+      { id: 'averageMoat', label: 'Average Moat Growth' },
+    ],
+    rows: {
+      roe: roeGrowth,
+      roic: roicGrowth,
       averageMoat: averageMoatGrowth,
     },
   }

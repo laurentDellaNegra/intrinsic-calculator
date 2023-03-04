@@ -1,16 +1,17 @@
 import { CheerioAPI, load } from 'cheerio'
 import { getRowNumbersInTable } from '../../utils/roicAi/roicAi'
 
+export type FinancialTable = Array<{
+  year: number
+  equity: number
+  eps: number
+  cashFromOA: number
+  revenue: number
+  capex: number
+  fcf: number
+}>
 export interface Financial {
-  table: Array<{
-    year: number
-    equity: number
-    eps: number
-    cashFromOA: number
-    revenue: number
-    capex: number
-    fcf: number
-  }>
+  table: FinancialTable
 }
 
 export function getFinancial(rawHtml: string): Financial {
@@ -40,6 +41,7 @@ export function getFinancial(rawHtml: string): Financial {
 
 function getYears($: CheerioAPI) {
   const res = getRowNumbersInTable($, 'Currency: USD, in millions')
+  //TODO: remove
   res.pop()
   return res
 }

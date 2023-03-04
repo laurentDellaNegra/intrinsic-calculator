@@ -1,13 +1,15 @@
 import { CheerioAPI, load } from 'cheerio'
 import { getRowNumbersInTable, getTtmInQuarterTable } from './roicAi'
 
+export type CompanyTable = Array<{
+  year: number
+  roe: number
+  roic: number
+}>
+
 export interface Company {
   epsTtm: number
-  table: Array<{
-    year: number
-    roe: number
-    roic: number
-  }>
+  table: CompanyTable
 }
 
 export function getCompany(rawHtml: string): Company {
@@ -29,7 +31,12 @@ export function getCompany(rawHtml: string): Company {
 }
 
 function getYears($: CheerioAPI) {
-  return getRowNumbersInTable($, 'Currency: USD')
+  const res = getRowNumbersInTable($, 'Currency: USD')
+  //TODO: remove
+  res.pop()
+  res.pop()
+  console.log('res', res)
+  return res
 }
 
 function getRoe($: CheerioAPI) {

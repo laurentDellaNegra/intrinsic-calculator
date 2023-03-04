@@ -55,7 +55,7 @@ export function createTable(company: Company, financial: Financial) {
         col: f.year,
         row: 'ROE',
         value: foundCompanyYear?.roe ?? null,
-        displayedValue: foundCompanyYear?.roe ?? '',
+        displayedValue: foundCompanyYear?.roe + '%' ?? '',
       }
     }),
     roic: financial.table.map((f) => {
@@ -64,7 +64,7 @@ export function createTable(company: Company, financial: Financial) {
         col: f.year,
         row: 'ROIC',
         value: foundCompanyYear?.roic ?? null,
-        displayedValue: foundCompanyYear?.roic ?? '',
+        displayedValue: foundCompanyYear?.roic + '%' ?? '',
       }
     }),
     capex: financial.table.map((f) => ({

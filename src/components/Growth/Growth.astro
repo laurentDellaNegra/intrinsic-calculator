@@ -1,49 +1,95 @@
 ---
-import { createTable } from './growth'
-const table = createTable(Astro.props.company, Astro.props.financial)
+import { createFinancialTable, createCompanyTable } from './growth'
+
+const financialTable = createFinancialTable(Astro.props.financial)
+const companyTable = createCompanyTable(Astro.props.company)
 ---
 
-<h2 class="mt-5 text-center text-2xl font-bold">Historical financial data</h2>
+<h2 class="mt-5 text-center text-2xl font-bold">Average Growth Rates</h2>
 
-<div class="flow-root">
-  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-      <table class="min-w-full divide-y divide-gray-500">
-        <thead>
-          <tr>
-            <th
-              scope="col"
-              class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-            ></th>
+<div class="flex justify-between">
+  <div class="flow-root">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-500">
+          <thead>
+            <tr>
+              <th
+                scope="col"
+                class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
+              ></th>
+              {
+                financialTable.cols.map((a) => (
+                  <th
+                    scope="col"
+                    class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
+                  >
+                    {a}
+                  </th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-700">
             {
-              table.cols.map((a) => (
-                <th
-                  scope="col"
-                  class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-                >
-                  {a}
-                </th>
+              financialTable.rowsArray.map((row) => (
+                <tr>
+                  <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-semibold text-white sm:pl-0">
+                    {row.label}
+                  </td>
+                  {financialTable.rows[row.id].map((a) => (
+                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-300 sm:pl-0">
+                      {a.displayedValue}
+                    </td>
+                  ))}
+                </tr>
               ))
             }
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-700">
-          {
-            table.rowsArray.map((row) => (
-              <tr>
-                <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-semibold text-white sm:pl-0">
-                  {row.label}
-                </td>
-                {table.rows[row.id].map((a) => (
-                  <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-300 sm:pl-0">
-                    {a.displayedValue}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="flow-root">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-500">
+          <thead>
+            <tr>
+              <th
+                scope="col"
+                class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
+              ></th>
+              {
+                companyTable.cols.map((a) => (
+                  <th
+                    scope="col"
+                    class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
+                  >
+                    {a}
+                  </th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-700">
+            {
+              companyTable.rowsArray.map((row) => (
+                <tr>
+                  <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-semibold text-white sm:pl-0">
+                    {row.label}
                   </td>
-                ))}
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+                  {companyTable.rows[row.id].map((a) => (
+                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-300 sm:pl-0">
+                      {a.displayedValue}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

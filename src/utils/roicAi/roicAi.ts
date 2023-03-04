@@ -1,5 +1,5 @@
 import { CheerioAPI } from 'cheerio'
-import { convertStringToNumber } from './number'
+import { convertStringToNumber } from '../number'
 
 export function getRowNumbersInTable($: CheerioAPI, rowName: string) {
   const arr: Array<number | null> = []

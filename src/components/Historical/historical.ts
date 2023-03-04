@@ -1,6 +1,6 @@
-import { average } from '../../utils/financial'
-import { Company } from './company'
-import { Financial } from './financial'
+import { average } from '../../utils/number'
+import { Company } from '../../utils/roicAi/company'
+import { Financial } from '../../utils/roicAi/financial'
 
 export type HistoricalTableCell = {
   col: string | number
@@ -106,11 +106,6 @@ export function createTable(company: Company, financial: Financial) {
     value: average(financial.table.slice(-3).map((t) => t.fcf)),
     displayedValue: average(financial.table.slice(-3).map((t) => t.fcf)).toFixed(2),
   })
-
-  // const eps3YearsAvg = average(financial.table.slice(-3).map((t) => t.eps))
-  // const fcf3YearsAvg = average(financial.table.slice(-3).map((t) => t.fcf))
-
-  console.log(table)
   return table
 }
 

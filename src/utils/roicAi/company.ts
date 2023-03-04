@@ -1,5 +1,5 @@
 import { CheerioAPI, load } from 'cheerio'
-import { getRowNumbersInTable, getTtmInQuarterTable } from '../../utils/roicAi'
+import { getRowNumbersInTable, getTtmInQuarterTable } from './roicAi'
 
 export interface Company {
   epsTtm: number

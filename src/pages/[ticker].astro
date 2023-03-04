@@ -2,11 +2,26 @@
 import Historical from '../components/Historical/Historical.astro'
 import Main from '../Layouts/Main.astro'
 const { ticker } = Astro.params
+// const response1 = await fetch(`https://roic.ai/financials/${ticker}`)
+// const rawHtmlFinancials = await response1.text()
+// const response2 = await fetch(`https://roic.ai/company/${ticker}`)
+// const rawHtmlCompany = await response2.text()
+import { rawHtmlFinancials } from '../dummy/METAfinancials'
+import { rawHtmlCompany } from '../dummy/METAcompany'
+import { getFinancial } from '../utils/roicAi/financial'
+import { getCompany } from '../utils/roicAi/company'
+import Growth from '../components/Growth/Growth.astro'
+
+const company = getCompany(rawHtmlCompany)
+const financial = getFinancial(rawHtmlFinancials)
 ---
 
 <Main>
   <h1 class="text-6xl font-black tracking-wide text-primary">{ticker}</h1>
   <div class="mt-8">
-    <Historical />
+    <Historical company={company} financial={financial} />
+  </div>
+  <div class="mt-8">
+    <Growth company={company} financial={financial} />
   </div>
 </Main>

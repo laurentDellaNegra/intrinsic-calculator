@@ -1,11 +1,11 @@
 ---
-import { createTable, getRows, HistoricalTableCell } from './historical'
+import { createTable } from './growth'
 const table = createTable(Astro.props.company, Astro.props.financial)
-const rows = getRows(table)
 ---
 
-<h2 class="text-center text-2xl font-bold">Historical financial data</h2>
-<div class="mt-5 flow-root">
+<h2 class="mt-5 text-center text-2xl font-bold">Historical financial data</h2>
+
+<div class="flow-root">
   <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
     <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
       <table class="min-w-full divide-y divide-gray-500">
@@ -16,7 +16,7 @@ const rows = getRows(table)
               class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
             ></th>
             {
-              table.year.map((a) => (
+              table.cols.map((a) => (
                 <th
                   scope="col"
                   class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
@@ -29,12 +29,12 @@ const rows = getRows(table)
         </thead>
         <tbody class="divide-y divide-gray-700">
           {
-            rows.map((row) => (
+            table.rowsArray.map((row) => (
               <tr>
                 <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-semibold text-white sm:pl-0">
                   {row.label}
                 </td>
-                {table[row.key].map((a: HistoricalTableCell) => (
+                {table.rows[row.id].map((a) => (
                   <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-300 sm:pl-0">
                     {a.displayedValue}
                   </td>

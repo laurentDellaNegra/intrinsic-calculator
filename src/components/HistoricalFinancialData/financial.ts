@@ -1,7 +1,7 @@
 import { CheerioAPI, load } from 'cheerio'
 import { getRowNumbersInTable } from '../../utils/roicAi'
 
-export function getHistoricalTable(rawHtml: string) {
+export function getFinancial(rawHtml: string) {
   const $ = load(rawHtml)
 
   const arrayYears = getYears($)
@@ -13,15 +13,17 @@ export function getHistoricalTable(rawHtml: string) {
   const arrayFcf = getFcf($)
 
   // create the final Table
-  return arrayYears.map((year, i) => ({
-    year: year,
-    equity: arrayEquities[i],
-    eps: arrayEPS[i],
-    cashFromOA: arrayCashFromOA[i],
-    revenue: arrayRevenues[i],
-    capex: arrayCapex[i],
-    fcf: arrayFcf[i],
-  }))
+  return {
+    table: arrayYears.map((year, i) => ({
+      year: year,
+      equity: arrayEquities[i],
+      eps: arrayEPS[i],
+      cashFromOA: arrayCashFromOA[i],
+      revenue: arrayRevenues[i],
+      capex: arrayCapex[i],
+      fcf: arrayFcf[i],
+    })),
+  }
 }
 
 function getYears($: CheerioAPI) {

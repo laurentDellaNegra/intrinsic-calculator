@@ -1,10 +1,11 @@
 ---
 import Historical from '../components/Historical/Historical.astro'
 import Main from '../Layouts/Main.astro'
+const { ticker } = Astro.params
 ---
 
 <Main>
-  <h1 class="text-6xl font-black tracking-wide text-primary">Intrinsic Calculator</h1>
+  <h1 class="text-6xl font-black tracking-wide text-primary">{ticker}</h1>
   <div class="mt-8">
     <Historical />
   </div>

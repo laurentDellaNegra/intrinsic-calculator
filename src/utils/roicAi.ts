@@ -1,8 +1,8 @@
 import { CheerioAPI } from 'cheerio'
-import { convertStringToNumber, numberFormatter } from './number'
+import { convertStringToNumber } from './number'
 
 export function getRowNumbersInTable($: CheerioAPI, rowName: string) {
-  const arr = []
+  const arr: Array<number | null> = []
   $(`span:contains("${rowName}")`)
     .first()
     .parent('div')
@@ -11,13 +11,14 @@ export function getRowNumbersInTable($: CheerioAPI, rowName: string) {
     .last()
     .contents()
     .each(function (i) {
-      arr[i] = convertStringToNumber($(this).text())
+      const textConverted = convertStringToNumber($(this).text())
+      arr[i] = isNaN(textConverted) ? null : textConverted
     })
-  return arr.filter((a) => !isNaN(a))
+  return arr
 }
 
 export function getTtmInQuarterTable($: CheerioAPI, tableName: string) {
-  return convertStringToNumber(
+  const textConverted = convertStringToNumber(
     $(`div:contains("${tableName}")`)
       .parent('div')
       .parent()
@@ -28,4 +29,5 @@ export function getTtmInQuarterTable($: CheerioAPI, tableName: string) {
       .last()
       .text()
   )
+  return isNaN(textConverted) ? null : textConverted
 }

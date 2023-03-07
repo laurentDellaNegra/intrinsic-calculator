@@ -1,8 +1,12 @@
 ---
-import { createFinancialTable, createCompanyTable } from './growth'
+import Valuation from '../Valuation/Valuation.astro'
+import { createLeftTable, createRightTable } from './growth'
 
-const financialTable = createFinancialTable(Astro.props.financial)
-const companyTable = createCompanyTable(Astro.props.company)
+const financial = Astro.props.financial
+const company = Astro.props.company
+
+const financialTable = createLeftTable(Astro.props.financial)
+const companyTable = createRightTable(Astro.props.financial, Astro.props.company)
 ---
 
 <h2 class="mt-5 text-center text-2xl font-bold">Average Growth Rates</h2>
@@ -92,4 +96,8 @@ const companyTable = createCompanyTable(Astro.props.company)
       </div>
     </div>
   </div>
+</div>
+
+<div class="mt-8">
+  <Valuation company={company} financial={financial} financialTable={financialTable} />
 </div>

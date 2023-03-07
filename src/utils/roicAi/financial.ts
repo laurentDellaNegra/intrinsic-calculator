@@ -9,6 +9,7 @@ export type FinancialTable = Array<{
   revenue: number
   capex: number
   fcf: number
+  sharesOuts: number
 }>
 export interface Financial {
   table: FinancialTable
@@ -24,25 +25,29 @@ export function getFinancial(rawHtml: string): Financial {
   const arrayCapex = getCapex($)
   const arrayRevenues = getRevenues($)
   const arrayFcf = getFcf($)
+  const arraySharesOuts = getSharesOuts($)
 
   // create the final Table
   return {
-    table: arrayYears.map((year, i) => ({
-      year: year,
-      equity: arrayEquities[i],
-      eps: arrayEPS[i],
-      cashFromOA: arrayCashFromOA[i],
-      revenue: arrayRevenues[i],
-      capex: arrayCapex[i],
-      fcf: arrayFcf[i],
-    })),
+    table: arrayYears
+      .map((year, i) => ({
+        year: year,
+        equity: arrayEquities[i],
+        eps: arrayEPS[i],
+        cashFromOA: arrayCashFromOA[i],
+        revenue: arrayRevenues[i],
+        capex: arrayCapex[i],
+        fcf: arrayFcf[i],
+        sharesOuts: arraySharesOuts[i],
+      }))
+      .filter((t) => t.year !== null),
   }
 }
 
 function getYears($: CheerioAPI) {
   const res = getRowNumbersInTable($, 'Currency: USD, in millions')
   //TODO: remove
-  res.pop()
+  // res.pop()
   return res
 }
 
@@ -68,4 +73,8 @@ function getCapex($: CheerioAPI) {
 
 function getFcf($: CheerioAPI) {
   return getRowNumbersInTable($, 'Free Cash Flow')
+}
+
+function getSharesOuts($: CheerioAPI) {
+  return getRowNumbersInTable($, 'Weighted Avg. Shares Outs. Dil.')
 }

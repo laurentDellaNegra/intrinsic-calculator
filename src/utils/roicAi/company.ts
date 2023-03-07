@@ -33,9 +33,8 @@ export function getCompany(rawHtml: string): Company {
 function getYears($: CheerioAPI) {
   const res = getRowNumbersInTable($, 'Currency: USD')
   //TODO: remove
-  res.pop()
-  res.pop()
-  console.log('res', res)
+  // res.pop()
+  // res.pop()
   return res
 }
 

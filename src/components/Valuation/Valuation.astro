@@ -1,0 +1,13 @@
+---
+import { Company } from '../../utils/roicAi/company'
+import { Financial } from '../../utils/roicAi/financial'
+
+const financial = Astro.props.financial as Financial
+const company = Astro.props.company as Company
+
+const ownEstimation = 0.12
+const futurePE = 24
+const intrinsic = (((company.epsTtm * (1 + ownEstimation)) ^ 5) * futurePE) / 2
+---
+
+<h2 class="mt-5 text-center text-2xl font-bold">Valuation: {intrinsic}</h2>

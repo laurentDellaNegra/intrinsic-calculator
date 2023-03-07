@@ -31,8 +31,7 @@ function getGrowth(reversedFinancial: FinancialTable, key: string) {
   ]
 }
 
-function getGrowthAverage(reversedFinancial: CompanyTable, key: string) {
-  console.log(reversedFinancial.slice(0, 5).map((r) => r[key]))
+function getGrowthAverage(reversedFinancial: FinancialTable | CompanyTable, key: string) {
   const growth1 = average(reversedFinancial.slice(0, 10).map((r) => r[key]))
   const growth2 = average(reversedFinancial.slice(0, 5).map((r) => r[key]))
   const growth3 = average(reversedFinancial.slice(0, 4).map((r) => r[key]))
@@ -89,22 +88,9 @@ export function computeAverage(
   ]
 }
 
-export function computeAverage2(roeGrowth: GrowthTable, roicGrowth: GrowthTable) {
-  const average1 = average([roeGrowth[0].value, roicGrowth[0].value])
-  const average2 = average([roeGrowth[1].value, roicGrowth[1].value])
-  const average3 = average([roeGrowth[2].value, roicGrowth[2].value])
-  const average4 = average([roeGrowth[3].value, roicGrowth[3].value])
-  return [
-    { value: average1, displayedValue: average1.toFixed(2) + '%' },
-    { value: average2, displayedValue: average2.toFixed(2) + '%' },
-    { value: average3, displayedValue: average3.toFixed(2) + '%' },
-    { value: average4, displayedValue: average4.toFixed(2) + '%' },
-  ]
-}
-
-export function createFinancialTable(financial: Financial) {
+export function createLeftTable(financial: Financial) {
   const cols = ['10 Years Avg.', '5 Years Avg.', '3 Years Avg.', '1 Years Avg.']
-  const reversedFinancialTable = financial.table.reverse()
+  const reversedFinancialTable = [...financial.table].reverse()
 
   const equitiesGrowth = getGrowth(reversedFinancialTable, 'equity')
   const epsGrowth = getGrowth(reversedFinancialTable, 'eps')
@@ -137,26 +123,25 @@ export function createFinancialTable(financial: Financial) {
   }
 }
 
-export function createCompanyTable(company: Company) {
+export function createRightTable(financial: Financial, company: Company) {
   const cols = ['10 Years Avg.', '5 Years Avg.', '3 Years Avg.', '1 Years Avg.']
-  const reversedCompanyTable = company.table.reverse()
+  const reversedCompanyTable = [...company.table].reverse()
+  const reversedFinancialTable = [...financial.table].reverse()
 
   const roeGrowth = getGrowthAverage(reversedCompanyTable, 'roe')
   const roicGrowth = getGrowthAverage(reversedCompanyTable, 'roic')
-
-  const averageMoatGrowth = computeAverage2(roeGrowth, roicGrowth)
-
+  const shareDillutionGrowth = getGrowth(reversedFinancialTable, 'sharesOuts')
   return {
     cols,
     rowsArray: [
       { id: 'roe', label: 'ROE Growth' },
       { id: 'roic', label: 'ROIC Growth' },
-      { id: 'averageMoat', label: 'Average Moat Growth' },
+      { id: 'shareOuts', label: 'Share dilution' },
     ],
     rows: {
       roe: roeGrowth,
       roic: roicGrowth,
-      averageMoat: averageMoatGrowth,
+      shareOuts: shareDillutionGrowth,
     },
   }
 }

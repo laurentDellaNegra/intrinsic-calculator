@@ -19,6 +19,7 @@ export type HistoricalTable = {
   roic: Array<HistoricalTableCell>
   capex: Array<HistoricalTableCell>
   fcf: Array<HistoricalTableCell>
+  shareOuts: Array<HistoricalTableCell>
 }
 
 export function createTable(company: Company, financial: Financial) {
@@ -55,7 +56,7 @@ export function createTable(company: Company, financial: Financial) {
         col: f.year,
         row: 'ROE',
         value: foundCompanyYear?.roe ?? null,
-        displayedValue: foundCompanyYear?.roe + '%' ?? '',
+        displayedValue: foundCompanyYear?.roe !== undefined ? foundCompanyYear?.roe + '%' : '',
       }
     }),
     roic: financial.table.map((f) => {
@@ -64,7 +65,7 @@ export function createTable(company: Company, financial: Financial) {
         col: f.year,
         row: 'ROIC',
         value: foundCompanyYear?.roic ?? null,
-        displayedValue: foundCompanyYear?.roic + '%' ?? '',
+        displayedValue: foundCompanyYear?.roic !== undefined ? foundCompanyYear?.roic + '%' : '',
       }
     }),
     capex: financial.table.map((f) => ({
@@ -78,6 +79,12 @@ export function createTable(company: Company, financial: Financial) {
       row: 'FCF',
       value: f.fcf,
       displayedValue: f.fcf ?? '',
+    })),
+    shareOuts: financial.table.map((f) => ({
+      col: f.year,
+      row: 'Shares Outstanding',
+      value: f.sharesOuts,
+      displayedValue: f.sharesOuts ?? '',
     })),
   }
   // TTM:

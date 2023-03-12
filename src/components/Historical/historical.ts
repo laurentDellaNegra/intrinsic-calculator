@@ -91,8 +91,8 @@ export function createTable(company: Company, financial: Financial) {
   table.eps.push({
     col: 'TTM',
     row: 'EPS',
-    value: company.epsTtm,
-    displayedValue: company.epsTtm,
+    value: company.epsTtm || financial.table[financial.table.length - 1].eps,
+    displayedValue: company.epsTtm || financial.table[financial.table.length - 1].eps,
   })
   table.fcf.push({
     col: 'TTM',

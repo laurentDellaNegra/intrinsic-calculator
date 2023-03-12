@@ -1,5 +1,5 @@
 ---
-import Valuation from '../Valuation/Valuation.astro'
+import Valuation from '../Valuation/Valuation'
 import { createLeftTable, createRightTable } from './growth'
 
 const financial = Astro.props.financial
@@ -96,8 +96,5 @@ const companyTable = createRightTable(Astro.props.financial, Astro.props.company
       </div>
     </div>
   </div>
-</div>
-
-<div class="mt-8">
-  <Valuation company={company} financial={financial} financialTable={financialTable} />
+  <Valuation client:load company={company} financial={financial} />
 </div>

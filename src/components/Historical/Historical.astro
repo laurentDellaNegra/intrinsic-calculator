@@ -7,43 +7,45 @@ const rows = getRows(table)
 <h2 class="text-center text-2xl font-bold">Historical financial data</h2>
 <div class="mt-5 flow-root">
   <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-      <table class="min-w-full divide-y divide-gray-500">
-        <thead>
-          <tr>
-            <th
-              scope="col"
-              class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-            ></th>
+    <div class="inline-block min-w-full rounded-2xl py-2 align-middle sm:px-6 lg:px-8">
+      <div class="overflow-hidden shadow ring-1 ring-white ring-opacity-5 sm:rounded-lg">
+        <table class="min-w-full divide-y divide-gray-500 bg-slate-800 shadow">
+          <thead>
+            <tr>
+              <th
+                scope="col"
+                class="whitespace-nowrap bg-slate-700 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white"
+              ></th>
+              {
+                table.year.map((a) => (
+                  <th
+                    scope="col"
+                    class="whitespace-nowrap bg-slate-700 py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white"
+                  >
+                    {a}
+                  </th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-700">
             {
-              table.year.map((a) => (
-                <th
-                  scope="col"
-                  class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-                >
-                  {a}
-                </th>
+              rows.map((row) => (
+                <tr>
+                  <td class="whitespace-nowrap  py-2 pl-4 pr-3 text-sm font-semibold text-white">
+                    {row.label}
+                  </td>
+                  {table[row.key].map((a: HistoricalTableCell) => (
+                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-300">
+                      {a.displayedValue}
+                    </td>
+                  ))}
+                </tr>
               ))
             }
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-700">
-          {
-            rows.map((row) => (
-              <tr>
-                <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-semibold text-white sm:pl-0">
-                  {row.label}
-                </td>
-                {table[row.key].map((a: HistoricalTableCell) => (
-                  <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-300 sm:pl-0">
-                    {a.displayedValue}
-                  </td>
-                ))}
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

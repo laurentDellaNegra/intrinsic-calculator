@@ -18,7 +18,7 @@ export default function Valuation({ company, financial }: Props) {
     <>
       <h2 class="mt-8 text-lg font-medium leading-6 text-gray-900">Valuation</h2>
       <Card className="mt-2">
-        <div class="flex flex-row items-center justify-between p-3">
+        <div class="flex flex-col items-center justify-between gap-5 p-3 xl:flex-row">
           <div class="flex gap-5">
             <div>
               <label for="estimation" class="block text-sm font-medium leading-6 text-gray-900">
@@ -59,10 +59,13 @@ export default function Valuation({ company, financial }: Props) {
             </div>
           </div>
 
-          <p class="font-bold">
-            ({epsTTM} * ((1 + {ownEstimation() / 100}) ^ 5) * {futurePE()}) / 2 =
+          <p class="text-sm text-gray-500">
+            ({epsTTM} * ((1 + {ownEstimation() / 100}) ^ 5) * {futurePE()}) / 2
           </p>
-          <p class="text-2xl font-bold text-primary">{intrinsic().toFixed(2)}</p>
+          <p>
+            <span class="font-bold text-gray-900">Intrinsic value: </span>
+            <span class="ml-2 text-2xl font-bold text-primary">{intrinsic().toFixed(2)}</span>
+          </p>
         </div>
       </Card>
     </>

@@ -27,8 +27,7 @@ export function getCompany(rawHtml: string, eps?: number): Company {
         roe: arrayRoe[i],
         roic: arrayRoic[i],
       }))
-      .filter((t) => t.year !== null)
-      .slice(-11),
+      .filter((t) => t.year !== null),
   }
 }
 

@@ -1,4 +1,9 @@
 ---
+import Card from '../ui/Card'
+import Table from '../ui/Table/Table'
+import Tbody from '../ui/Table/Tbody'
+import Td from '../ui/Table/Td'
+import Th from '../ui/Table/Th'
 import Valuation from '../Valuation/Valuation'
 import { createLeftTable, createRightTable } from './growth'
 
@@ -9,92 +14,59 @@ const financialTable = createLeftTable(Astro.props.financial)
 const companyTable = createRightTable(Astro.props.financial, Astro.props.company)
 ---
 
-<h2 class="mt-5 text-center text-2xl font-bold">Average Growth Rates</h2>
-
-<div class="flex justify-between">
-  <div class="flow-root">
-    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <table class="min-w-full divide-y divide-gray-500">
-          <thead>
+<h2 class="mt-8 text-lg font-medium leading-6 text-gray-900">Average Growth Rates</h2>
+<div class="mt-2 flex flex-col justify-between gap-8 xl:flex-row">
+  <Card>
+    <Table>
+      <thead>
+        <tr>
+          <Th />
+          {financialTable.cols.map((a) => <Th>{a}</Th>)}
+        </tr>
+      </thead>
+      <Tbody>
+        {
+          financialTable.rowsArray.map((row) => (
             <tr>
-              <th
-                scope="col"
-                class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-              ></th>
-              {
-                financialTable.cols.map((a) => (
-                  <th
-                    scope="col"
-                    class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-                  >
-                    {a}
-                  </th>
-                ))
-              }
+              <Td>
+                <p class="text-gray-500">{row.label}</p>
+              </Td>
+              {financialTable.rows[row.id].map((a) => (
+                <Td>
+                  <p class="font-medium text-gray-900">{a.displayedValue}</p>
+                </Td>
+              ))}
             </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-700">
-            {
-              financialTable.rowsArray.map((row) => (
-                <tr>
-                  <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-semibold text-white sm:pl-0">
-                    {row.label}
-                  </td>
-                  {financialTable.rows[row.id].map((a) => (
-                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-300 sm:pl-0">
-                      {a.displayedValue}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <div class="flow-root">
-    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <table class="min-w-full divide-y divide-gray-500">
-          <thead>
+          ))
+        }
+      </Tbody>
+    </Table>
+  </Card>
+  <Card>
+    <Table>
+      <thead>
+        <tr>
+          <Th />
+          {companyTable.cols.map((a) => <Th>{a}</Th>)}
+        </tr>
+      </thead>
+      <Tbody>
+        {
+          companyTable.rowsArray.map((row) => (
             <tr>
-              <th
-                scope="col"
-                class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-              ></th>
-              {
-                companyTable.cols.map((a) => (
-                  <th
-                    scope="col"
-                    class="whitespace-nowrap py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-white sm:pl-0"
-                  >
-                    {a}
-                  </th>
-                ))
-              }
+              <Td>
+                <p class="text-gray-500">{row.label}</p>
+              </Td>
+              {companyTable.rows[row.id].map((a) => (
+                <Td>
+                  <p class="font-medium text-gray-900">{a.displayedValue}</p>
+                </Td>
+              ))}
             </tr>
-          </thead>
-          <tbody class="divide-y divide-gray-700">
-            {
-              companyTable.rowsArray.map((row) => (
-                <tr>
-                  <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-semibold text-white sm:pl-0">
-                    {row.label}
-                  </td>
-                  {companyTable.rows[row.id].map((a) => (
-                    <td class="whitespace-nowrap py-2 pl-4 pr-3 text-sm text-gray-300 sm:pl-0">
-                      {a.displayedValue}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  <Valuation client:load company={company} financial={financial} />
+          ))
+        }
+      </Tbody>
+    </Table>
+  </Card>
 </div>
+<Valuation client:load company={company} financial={financial} />

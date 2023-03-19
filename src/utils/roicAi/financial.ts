@@ -40,7 +40,8 @@ export function getFinancial(rawHtml: string): Financial {
         fcf: arrayFcf[i],
         sharesOuts: arraySharesOuts[i],
       }))
-      .filter((t) => t.year !== null),
+      .filter((t) => t.year !== null)
+      .slice(-11),
   }
 }
 

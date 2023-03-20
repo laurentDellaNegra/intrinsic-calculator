@@ -9,7 +9,7 @@ export default function SearchBar() {
     window.location.pathname = `/${text()}`
   }
   return (
-    <div class="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-6xl lg:px-8">
+    <div class="flex flex-1 justify-between px-4 sm:px-6 lg:mx-auto lg:max-w-7xl lg:px-8">
       <div class="flex flex-1">
         <form class="flex w-full md:ml-0" onsubmit={handleFormSubmit}>
           <label for="search-field" class="sr-only">

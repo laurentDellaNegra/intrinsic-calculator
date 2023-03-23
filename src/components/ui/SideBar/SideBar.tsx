@@ -10,14 +10,20 @@ export default function SideBar() {
       {/* <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. --> */}
       <div class="relative z-40 lg:hidden" role="dialog" aria-modal="true">
         <div
-          class="fixed inset-0 bg-gray-600 bg-opacity-75 transition-opacity duration-300 ease-linear"
+          class="fixed bg-gray-600 bg-opacity-75 transition-opacity duration-300 ease-linear"
           classList={{
-            'opacity-100': $mobileSideBarOpen(),
+            'opacity-100 inset-0': $mobileSideBarOpen(),
             'opacity-0': !$mobileSideBarOpen(),
           }}
         ></div>
 
-        <div class="fixed inset-0 z-40 flex">
+        <div
+          class="fixed z-40 flex"
+          classList={{
+            'inset-0': $mobileSideBarOpen(),
+            'w-0 h-0': !$mobileSideBarOpen(),
+          }}
+        >
           <div
             class="relative flex w-full max-w-xs flex-1 transform flex-col bg-astro-700 pt-5 pb-4 transition duration-300 ease-in-out"
             classList={{

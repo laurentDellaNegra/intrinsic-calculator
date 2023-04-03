@@ -24,12 +24,14 @@ import Container from '../components/ui/Container'
 
 const company = getCompany(rawHtmlCompany)
 const financial = getFinancial(rawHtmlFinancials)
+
+const tickerDisplayed = ticker.toUpperCase()
 ---
 
 <Main>
   <Container>
     <div class="mt-8">
-      <h1 class="text-6xl font-black tracking-wide text-primary">{ticker}</h1>
+      <h1 class="text-6xl font-black tracking-wide text-primary">{tickerDisplayed}</h1>
     </div>
     <div class="mt-8">
       <Historical company={company} financial={financial} />

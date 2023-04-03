@@ -8,6 +8,7 @@ function getGrowth(reversedFinancial: FinancialTable, key: string) {
     reversedFinancial[0][key],
     10
   )
+
   const growth2 = averageCoumpoundGrowthRate(
     reversedFinancial[5][key],
     reversedFinancial[0][key],

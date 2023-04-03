@@ -22,5 +22,11 @@ export function average(array: Array<number>) {
 }
 
 export function averageCoumpoundGrowthRate(start: number, end: number, nbYear: number) {
-  return Math.pow(end / start, 1 / nbYear) - 1
+  if (start === -1.28) {
+    console.log('start', start)
+    console.log('end', end)
+    console.log('nbYear', nbYear)
+    console.log('pow', Math.pow(end / Math.abs(start), 1 / nbYear) - 1)
+  }
+  return Math.pow(end / Math.abs(start), 1 / nbYear) - 1
 }

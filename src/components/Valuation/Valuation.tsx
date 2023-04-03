@@ -133,7 +133,7 @@ export default function Valuation({ company, financial }: Props) {
           </div>
 
           <p class="text-sm text-gray-500">
-            ({eps()} * ((1 + {ownEstimation() / 100}) ^ 5) * {futurePE()}) /{' '}
+            ({eps().toFixed(2)} * ((1 + {ownEstimation() / 100}) ^ 5) * {futurePE()}) /{' '}
             {((13.33 * desiredReturn()) / 100).toFixed(2)}
           </p>
           <p>
